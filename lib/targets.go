@@ -149,6 +149,9 @@ func NewLazyTargeter(src io.Reader, body []byte, hdr http.Header) Targeter {
 					return fmt.Errorf("bad body: %s", err)
 				}
 				break
+			} else if strings.HasPrefix(line, ">") {
+				tgt.Body = []byte(line[1:])
+				break
 			}
 			tokens = strings.SplitN(line, ":", 2)
 			if len(tokens) < 2 {
